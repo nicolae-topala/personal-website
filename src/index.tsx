@@ -1,10 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/index.scss';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
+import { AboutPage } from 'pages/About/AboutPage';
+import { ContactPage } from 'pages/Contact/ContactPage';
+import './styles/index.scss';
+
 ReactDOM.render(
-  <div>Hello World !</div>,
+  <BrowserRouter>
+    <Routes>
+      <Route path='/About' element={<AboutPage/>}/>
+      <Route path='/Contact' element={<ContactPage/>}/>
+      <Route path='/' element={<Navigate to='/About'/>}/>
+    </Routes>
+  </BrowserRouter>,
   document.getElementById('root')
 );
 
