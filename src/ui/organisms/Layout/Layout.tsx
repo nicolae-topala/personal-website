@@ -1,4 +1,6 @@
 import React from 'react';
+import { Navbar } from 'ui/molecules/Navbar/Navbar';
+
 import './Layout.scss';
 
 interface Layout {
@@ -9,7 +11,7 @@ export const Layout: React.FC<Layout> = (props): React.ReactElement => {
   return (
     <div className="layout">
       <div className="layout__top">
-        <div>Navbar...</div>
+        <Navbar />
         <div>{props.children}</div>
       </div>
 

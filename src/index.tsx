@@ -1,20 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
+// Pages
 import { AboutPage } from 'pages/About/AboutPage';
 import { ContactPage } from 'pages/Contact/ContactPage';
+import { BlogPage } from 'pages/Blog/BlogPage';
+import { history } from './libs/history';
+
+// SCSS
 import './styles/index.scss';
 
 ReactDOM.render(
-  <BrowserRouter>
-    <Routes>
-      <Route path='/About' element={<AboutPage/>}/>
-      <Route path='/Contact' element={<ContactPage/>}/>
-      <Route path='/' element={<Navigate to='/About'/>}/>
-    </Routes>
-  </BrowserRouter>,
+  <Router history={history}>
+    <Switch>
+      <Route path="/about" component={AboutPage} />
+      <Route path="/blog" component={BlogPage} />
+      <Route path="/contact" component={ContactPage} />
+
+      <Route path="/" exact={true}>
+        <Redirect to="/about" exact={true} />
+      </Route>
+    </Switch>
+  </Router>,
   document.getElementById('root')
 );
 
