@@ -1,13 +1,13 @@
 import React from 'react';
 import env from '@beam-australia/react-env';
 
-import { history } from 'libs/history';
 import { useMenu } from 'hooks/useMenu';
 import { Icon } from 'resources/icons/icons';
+import { history } from 'libs/history';
 
-import './Navbar.scss';
+import './Footer.scss';
 
-export const Navbar = (): React.ReactElement => {
+export const Footer = (): React.ReactElement => {
   const menu = useMenu();
 
   const goToPage = (route: string): void => {
@@ -16,9 +16,19 @@ export const Navbar = (): React.ReactElement => {
 
   return (
     <>
-      <div className="navbar">
-        <div className="navbar__title">Me</div>
-        <div className="navbar__socials">
+      <div className="footer">
+        <div className="footer__menu">
+          {menu.map((item) => (
+            <span
+              className={`menu__item${item.active ? '--active' : ''}`}
+              key={item.route}
+              onClick={() => goToPage(item.route)}
+            >
+              {item.label}
+            </span>
+          ))}
+        </div>
+        <div className="footer__socials">
           <a
             href={env('LINKEDIN_URL')}
             target="_blank"
@@ -51,18 +61,6 @@ export const Navbar = (): React.ReactElement => {
             <Icon type="twitter" />
           </a>
         </div>
-      </div>
-
-      <div className="menu">
-        {menu.map((item) => (
-          <span
-            className={`menu__item${item.active ? '--active' : ''}`}
-            key={item.route}
-            onClick={() => goToPage(item.route)}
-          >
-            {item.label}
-          </span>
-        ))}
       </div>
     </>
   );
