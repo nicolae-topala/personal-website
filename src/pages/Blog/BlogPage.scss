@@ -1,4 +1,5 @@
-@import '../../styles/typography.scss', '../../styles/palette.scss';
+@import '../../styles/typography.scss', '../../styles/palette.scss',
+  '../../styles/helpers.scss';
 
 .blog {
   display: flex;
@@ -18,6 +19,67 @@
 
       div {
         margin-right: 45px;
+      }
+    }
+  }
+
+  &__twitter-posts {
+    display: flex;
+    flex-direction: column;
+    margin-left: 35px;
+
+    &__title {
+      @include SFProRegular;
+      font-size: rem(20px);
+      color: $blackPrimary;
+      margin-bottom: 20px;
+    }
+
+    &__tweets {
+      display: flex;
+      flex-direction: column;
+
+      .post {
+        display: flex;
+        flex-direction: column;
+        width: 263px;
+        min-height: 136px;
+        margin-bottom: 10px;
+        background-color: white;
+        border: 1px solid $border;
+        border-radius: 6px;
+
+        .header {
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+
+          &__avatar {
+            background-color: #ddd;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-top: 17px;
+            margin-left: 17px;
+            margin-bottom: 17px;
+          }
+
+          &__name {
+            @include SFProRegular;
+            font-size: rem(16px);
+            color: $blackPrimary;
+            margin-left: 15px;
+          }
+        }
+
+        .post-text {
+          @include SFProRegular;
+          font-size: rem(15px);
+          color: $textPrimary;
+          margin-left: 17px;
+          padding-right: 10px;
+          padding-bottom: 10px;
+        }
       }
     }
   }
