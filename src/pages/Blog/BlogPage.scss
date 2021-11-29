@@ -1,0 +1,24 @@
+@import '../../styles/typography.scss', '../../styles/palette.scss';
+
+.blog {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-between;
+
+  &__posts {
+    display: flex;
+    flex-direction: column;
+
+    &__posts-grid {
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      div {
+        margin-right: 45px;
+      }
+    }
+  }
+}
