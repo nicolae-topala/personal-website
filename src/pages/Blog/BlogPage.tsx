@@ -1,5 +1,6 @@
 import React from 'react';
 import env from '@beam-australia/react-env';
+import { posts } from 'libs/http/posts/posts';
 
 import { Layout } from 'ui/organisms/Layout/Layout';
 import { BigThumbnail } from './atoms/BigThumbnail/BigThumbnail';
@@ -9,6 +10,13 @@ import TwitterAvatar from 'pages/About/resources/1.jpg';
 import './BlogPage.scss';
 
 export const BlogPage = (): React.ReactElement => {
+  const getData = async () => {
+    const data = await posts.getPosts();
+    console.log(data);
+  };
+
+  getData();
+
   return (
     <Layout>
       <div className="blog">
