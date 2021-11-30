@@ -15,7 +15,12 @@ export const BlogPage = (): React.ReactElement => {
     console.log(data);
   };
 
-  getData();
+  const getTweets = async () => {
+    const data = await posts.getTweets('228456219');
+    console.log(data);
+  };
+
+  getTweets();
 
   return (
     <Layout>
