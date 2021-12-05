@@ -15,7 +15,7 @@ export const SmallThumbnail: React.FC<Props> = ({
   data,
 }): React.ReactElement => {
   const goToPostPage = (): void => {
-    //history.push(`/blog/${data.id}`);
+    history.push(`/blog/${data.id}`);
   };
 
   return (

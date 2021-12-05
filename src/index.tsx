@@ -8,6 +8,7 @@ import { AboutPage } from 'pages/About/AboutPage';
 import { ContactPage } from 'pages/Contact/ContactPage';
 import { BlogPage } from 'pages/Blog/BlogPage';
 import { history } from './libs/history';
+import { BlogPostPage } from 'pages/BlogPost/BlogPostPage';
 
 // SCSS
 import './styles/index.scss';
@@ -16,7 +17,8 @@ ReactDOM.render(
   <Router history={history}>
     <Switch>
       <Route path="/about" component={AboutPage} />
-      <Route path="/blog" component={BlogPage} />
+      <Route path="/blog" exact={true} component={BlogPage} />
+      <Route path="/blog/:id" component={BlogPostPage} />
       <Route path="/contact" component={ContactPage} />
 
       <Route path="/" exact={true}>
