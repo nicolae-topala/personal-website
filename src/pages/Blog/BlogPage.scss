@@ -18,7 +18,11 @@
       flex-wrap: wrap;
 
       div {
-        margin-right: 45px;
+        margin-right: 43px;
+
+        &:nth-child(3n) {
+          margin-right: 0px !important;
+        }
       }
     }
   }
