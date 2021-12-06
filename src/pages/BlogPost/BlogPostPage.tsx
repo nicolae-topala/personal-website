@@ -7,12 +7,14 @@ import { Posts } from 'libs/http/posts/posts.types';
 import { posts as postsHttp } from 'libs/http/posts/posts';
 
 import { Layout } from 'ui/organisms/Layout/Layout';
+import { Loader } from 'ui/atoms/Loader/Loader';
 import { PostAction } from './atoms/PostAction/PostAction';
 
 import './BlogPostPage.scss';
 
 export const BlogPostPage: React.FC = (): React.ReactElement => {
   const [post, setPost] = useState<Posts>();
+  const [isLoading, setIsLoading] = useState(true);
 
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
@@ -20,6 +22,8 @@ export const BlogPostPage: React.FC = (): React.ReactElement => {
   useEffect(() => {
     const getPost = async () => {
       const { data } = await postsHttp.getPost(id);
+
+      setIsLoading(false);
       console.log(data);
       setPost(data);
     };
@@ -48,40 +52,46 @@ export const BlogPostPage: React.FC = (): React.ReactElement => {
   return (
     <Layout>
       <div className="blog-post">
-        {post && (
+        {isLoading ? (
+          <Loader />
+        ) : (
           <>
-            <img
-              src={post.coverUrl}
-              className="blog-post__cover"
-              alt="Blog Cover"
-            />
-            <div className="blog-post__title">{post.title}</div>
-            <div className="blog-post__date">{getPostDate()}</div>
-            <div
-              className="blog-post__post"
-              dangerouslySetInnerHTML={{ __html: post.text }}
-            />
-            <div className="blog-post__post-actions">
-              <div className="blog-post__post-actions__socials">
-                <TwitterShareButton
-                  url={`${env('WEBSITE_URL')}${location.pathname}`}
-                  className="react-share"
-                >
-                  <PostAction iconType="small-twitter" message="Tweet" />
-                </TwitterShareButton>
-                <FacebookShareButton
-                  url={`${env('WEBSITE_URL')}${location.pathname}`}
-                  className="react-share"
-                >
-                  <PostAction iconType="small-facebook" message="Share" />
-                </FacebookShareButton>
-                <PostAction
-                  iconType="copy"
-                  message="Copy Link"
-                  onClick={onCopyLink}
+            {post && (
+              <>
+                <img
+                  src={post.coverUrl}
+                  className="blog-post__cover"
+                  alt="Blog Cover"
                 />
-              </div>
-            </div>
+                <div className="blog-post__title">{post.title}</div>
+                <div className="blog-post__date">{getPostDate()}</div>
+                <div
+                  className="blog-post__post"
+                  dangerouslySetInnerHTML={{ __html: post.text }}
+                />
+                <div className="blog-post__post-actions">
+                  <div className="blog-post__post-actions__socials">
+                    <TwitterShareButton
+                      url={`${env('WEBSITE_URL')}${location.pathname}`}
+                      className="react-share"
+                    >
+                      <PostAction iconType="small-twitter" message="Tweet" />
+                    </TwitterShareButton>
+                    <FacebookShareButton
+                      url={`${env('WEBSITE_URL')}${location.pathname}`}
+                      className="react-share"
+                    >
+                      <PostAction iconType="small-facebook" message="Share" />
+                    </FacebookShareButton>
+                    <PostAction
+                      iconType="copy"
+                      message="Copy Link"
+                      onClick={onCopyLink}
+                    />
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>

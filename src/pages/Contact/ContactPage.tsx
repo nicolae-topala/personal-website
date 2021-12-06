@@ -13,6 +13,7 @@ export const ContactPage = (): React.ReactElement => {
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
   const [message, setMessage] = useState('');
+  const [isButtonLoading, setIsButtonLoading] = useState(false);
 
   const onSubmit = () => {
     const data = {
@@ -23,8 +24,18 @@ export const ContactPage = (): React.ReactElement => {
       message,
     };
 
+    setIsButtonLoading(true);
+    setTimeout(() => setIsButtonLoading(false), 3000);
+
+    /*
+    The line above is a representation. 
+    In reality we would use an API call and after se button state to true
+    Example
+    post API CALL
+
+    setIsButtonLoading(false)
+    */
     console.log(data);
-    // API CALL
   };
 
   return (
@@ -68,7 +79,7 @@ export const ContactPage = (): React.ReactElement => {
             onChange={setMessage}
           />
         </div>
-        <Button text="Send" onClick={onSubmit} />
+        <Button text="Send" loading={isButtonLoading} onClick={onSubmit} />
       </div>
     </Layout>
   );
