@@ -16,3 +16,15 @@
     outline-color: $primaryBlue;
   }
 }
+
+p {
+  margin: 0;
+  padding: 0;
+  color: $textPrimary;
+  font-size: rem(14px);
+  @include SFProRegular;
+}
+
+.input-invalid {
+  border: 1px solid rgb(197, 40, 40);
+}

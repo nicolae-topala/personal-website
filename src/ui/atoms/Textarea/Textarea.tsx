@@ -7,22 +7,27 @@ interface Props {
   className?: string;
   value?: string;
   onChange: (value: string) => void;
+  errorMessage?: string;
 }
 
 export const Textarea: React.FC<Props> = ({
   placeholder,
-  className,
+  className = '',
   value,
   onChange,
+  errorMessage,
 }): React.ReactElement => {
   return (
     <>
       <textarea
-        className={`textarea ${className ? className : ''}`}
+        className={`textarea ${className} ${
+          errorMessage ? 'textarea-invalid' : ''
+        }`}
         placeholder={placeholder}
         value={value}
         onChange={(event) => onChange(event?.target.value)}
       />
+      {errorMessage && <p>{errorMessage}</p>}
     </>
   );
 };

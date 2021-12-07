@@ -18,13 +18,21 @@ export const BlogPage = (): React.ReactElement => {
   const [tweets, setTweets] = useState<{ data: Tweet[] }>();
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingTweets, setIsLoadingTweets] = useState(true);
+  const [errors, setErrors] = useState({
+    statusCode: 0,
+    message: '',
+  });
 
   useEffect(() => {
     const getData = async () => {
-      const { data } = await postsHttp.getPosts();
+      try {
+        const { data } = await postsHttp.getPosts();
 
-      setIsLoading(false);
-      setPosts(data);
+        setIsLoading(false);
+        setPosts(data);
+      } catch (error: any) {
+        setErrors(error.response.data);
+      }
     };
 
     getData();
@@ -44,58 +52,69 @@ export const BlogPage = (): React.ReactElement => {
   return (
     <Layout>
       <div className="blog">
-        {isLoading || isLoadingTweets ? (
-          <Loader />
+        {errors && errors.message ? (
+          <>
+            <p>Status code = {errors.statusCode}</p>
+            <p>Message = {errors.message}</p>
+          </>
         ) : (
           <>
-            <div className="blog__posts">
-              {posts && posts.length !== 0 ? (
-                <>
-                  <BigThumbnail data={posts[0]} />
-                  <div className="blog__posts__posts-grid">
-                    {posts.length > 1 &&
-                      posts
-                        .slice(1)
-                        .map((item) => (
-                          <SmallThumbnail key={item.id} data={item} />
-                        ))}
+            {isLoading || isLoadingTweets ? (
+              <Loader />
+            ) : (
+              <>
+                <div className="blog__posts">
+                  {posts && posts.length !== 0 ? (
+                    <>
+                      <BigThumbnail data={posts[0]} />
+                      <div className="blog__posts__posts-grid">
+                        {posts.length > 1 &&
+                          posts
+                            .slice(1)
+                            .map((item) => (
+                              <SmallThumbnail key={item.id} data={item} />
+                            ))}
+                      </div>
+                    </>
+                  ) : (
+                    <p>Currently no posts</p>
+                  )}
+                </div>
+                <div className="blog__twitter-posts">
+                  <div className="blog__twitter-posts__title">
+                    Recent Tweets
                   </div>
-                </>
-              ) : (
-                <p>Currently no posts</p>
-              )}
-            </div>
-            <div className="blog__twitter-posts">
-              <div className="blog__twitter-posts__title">Recent Tweets</div>
-              <div className="blog__twitter-posts__tweets">
-                {tweets &&
-                  tweets.data.slice(0, 5).map((item) => (
-                    <div key={item.id} className="post">
-                      <a
-                        href={env('TWITTER_URL')}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="header">
-                          <img
-                            src={TwitterAvatar}
-                            className="header__avatar"
-                            alt="My avatar"
-                          />
-                          <div className="header__name">Nick</div>
+                  <div className="blog__twitter-posts__tweets">
+                    {tweets &&
+                      tweets.data.slice(0, 5).map((item) => (
+                        <div key={item.id} className="post">
+                          <a
+                            href={env('TWITTER_URL')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <div className="header">
+                              <img
+                                src={TwitterAvatar}
+                                className="header__avatar"
+                                alt="My avatar"
+                              />
+                              <div className="header__name">Nick</div>
+                            </div>
+                          </a>
+                          <a
+                            href={env('TWITTER_URL')}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <div className="post-text">{item.text}</div>
+                          </a>
                         </div>
-                      </a>
-                      <a
-                        href={env('TWITTER_URL')}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <div className="post-text">{item.text}</div>
-                      </a>
-                    </div>
-                  ))}
-              </div>
-            </div>
+                      ))}
+                  </div>
+                </div>
+              </>
+            )}
           </>
         )}
       </div>
