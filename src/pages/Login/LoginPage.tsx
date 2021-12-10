@@ -3,6 +3,7 @@ import { auth } from 'libs/http/auth/auth';
 import { save } from 'react-cookies';
 
 import { history } from 'libs/history';
+import { UserContext } from 'contexts/UserContext';
 import { Button } from 'ui/atoms/Button/Button';
 import { Input } from 'ui/atoms/Input/Input';
 
@@ -11,6 +12,7 @@ import './LoginPage.scss';
 export const LoginPage = (): React.ReactElement => {
   const [username, setUserName] = useState('');
   const [password, setPassword] = useState('');
+  const { setIsUserLogged } = React.useContext(UserContext);
 
   const onLogin = async () => {
     const { data } = await auth.login({ username, password });
@@ -18,6 +20,7 @@ export const LoginPage = (): React.ReactElement => {
 
     if (data?.accessToken) {
       save('token', data.accessToken, { path: '/' });
+      setIsUserLogged(true);
       history.push('/');
     }
   };

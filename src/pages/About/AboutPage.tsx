@@ -7,6 +7,7 @@ import Photo2 from './resources/2.jpg';
 import Photo3 from './resources/3.jpg';
 import Photo4 from './resources/4.jpg';
 import Photo5 from './resources/5.jpg';
+
 import './AboutPage.scss';
 
 export const AboutPage = (): React.ReactElement => {

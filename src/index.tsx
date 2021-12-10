@@ -3,6 +3,9 @@ import ReactDOM from 'react-dom';
 import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
+//Contexts
+import { UserProvider } from 'contexts/UserContext';
+
 // Pages
 import { AboutPage } from 'pages/About/AboutPage';
 import { ContactPage } from 'pages/Contact/ContactPage';
@@ -15,19 +18,21 @@ import { LoginPage } from 'pages/Login/LoginPage';
 import './styles/index.scss';
 
 ReactDOM.render(
-  <Router history={history}>
-    <Switch>
-      <Route path="/about" component={AboutPage} />
-      <Route path="/blog" exact={true} component={BlogPage} />
-      <Route path="/blog/:id" component={BlogPostPage} />
-      <Route path="/contact" component={ContactPage} />
-      <Route path="/login" component={LoginPage} />
+  <UserProvider>
+    <Router history={history}>
+      <Switch>
+        <Route path="/about" component={AboutPage} />
+        <Route path="/blog" exact={true} component={BlogPage} />
+        <Route path="/blog/:id" component={BlogPostPage} />
+        <Route path="/contact" component={ContactPage} />
+        <Route path="/login" component={LoginPage} />
 
-      <Route path="/" exact={true}>
-        <Redirect to="/about" exact={true} />
-      </Route>
-    </Switch>
-  </Router>,
+        <Route path="/" exact={true}>
+          <Redirect to="/about" exact={true} />
+        </Route>
+      </Switch>
+    </Router>
+  </UserProvider>,
   document.getElementById('root')
 );
 
