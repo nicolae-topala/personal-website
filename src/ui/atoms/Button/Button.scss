@@ -19,6 +19,10 @@
   @include SFProRegular;
   font-size: rem(18px);
 
+  &:hover {
+    cursor: pointer;
+  }
+
   p {
     color: white;
     border: none;

@@ -9,6 +9,7 @@ import { ContactPage } from 'pages/Contact/ContactPage';
 import { BlogPage } from 'pages/Blog/BlogPage';
 import { history } from './libs/history';
 import { BlogPostPage } from 'pages/BlogPost/BlogPostPage';
+import { LoginPage } from 'pages/Login/LoginPage';
 
 // SCSS
 import './styles/index.scss';
@@ -20,6 +21,7 @@ ReactDOM.render(
       <Route path="/blog" exact={true} component={BlogPage} />
       <Route path="/blog/:id" component={BlogPostPage} />
       <Route path="/contact" component={ContactPage} />
+      <Route path="/login" component={LoginPage} />
 
       <Route path="/" exact={true}>
         <Redirect to="/about" exact={true} />
