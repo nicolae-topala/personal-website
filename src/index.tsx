@@ -1,37 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { Router, Switch, Route, Redirect } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
+import { routes } from 'router';
 
 //Contexts
 import { UserProvider } from 'contexts/UserContext';
 
-// Pages
-import { AboutPage } from 'pages/About/AboutPage';
-import { ContactPage } from 'pages/Contact/ContactPage';
-import { BlogPage } from 'pages/Blog/BlogPage';
-import { history } from './libs/history';
-import { BlogPostPage } from 'pages/BlogPost/BlogPostPage';
-import { LoginPage } from 'pages/Login/LoginPage';
-
 // SCSS
 import './styles/index.scss';
+import { RouterGenerator } from 'libs/RouterGenerator';
 
 ReactDOM.render(
   <UserProvider>
-    <Router history={history}>
-      <Switch>
-        <Route path="/about" component={AboutPage} />
-        <Route path="/blog" exact={true} component={BlogPage} />
-        <Route path="/blog/:id" component={BlogPostPage} />
-        <Route path="/contact" component={ContactPage} />
-        <Route path="/login" component={LoginPage} />
-
-        <Route path="/" exact={true}>
-          <Redirect to="/about" exact={true} />
-        </Route>
-      </Switch>
-    </Router>
+    <RouterGenerator routes={routes} />
   </UserProvider>,
   document.getElementById('root')
 );
