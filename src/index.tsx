@@ -2,13 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import reportWebVitals from './reportWebVitals';
 import { routes } from 'router';
+import { RouterGenerator } from 'libs/RouterGenerator';
 
 //Contexts
 import { UserProvider } from 'contexts/UserContext';
 
 // SCSS
 import './styles/index.scss';
-import { RouterGenerator } from 'libs/RouterGenerator';
 
 ReactDOM.render(
   <UserProvider>

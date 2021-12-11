@@ -1,0 +1,56 @@
+@import '../../styles/typography.scss', '../../styles/palette.scss',
+  '../../styles/helpers.scss';
+
+.add-post {
+  display: flex;
+  flex-direction: column;
+  max-width: 700px;
+  padding-left: 10px;
+  padding-right: 10px;
+
+  &__title {
+    @include SFProRegular;
+    color: $blackPrimary;
+    font-size: rem(18px);
+    margin-bottom: 20px;
+    margin-top: 20px;
+  }
+
+  &__add-cover {
+    display: flex;
+    flex-direction: row;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+    .photo {
+      display: inline-block;
+      color: $blackPrimary;
+      @include SFProRegular;
+      font-size: rem(18px);
+      margin-right: 10px;
+    }
+
+    .upload-btn {
+      display: inline-block;
+      color: $blackPrimary;
+      @include SFProRegular;
+      font-size: rem(18px);
+    }
+  }
+
+  &__editor {
+    min-height: 200px;
+  }
+
+  &__type {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 10px;
+    margin-bottom: 30px;
+
+    p {
+      margin-left: 10px;
+    }
+  }
+}

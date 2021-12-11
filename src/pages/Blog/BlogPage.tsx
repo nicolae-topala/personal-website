@@ -1,7 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import env from '@beam-australia/react-env';
 import { posts as postsHttp } from 'libs/http/posts/posts';
+import { history } from 'libs/history';
 
+import { UserContext } from 'contexts/UserContext';
 import { Posts } from 'libs/http/posts/posts.types';
 import { Tweet } from 'libs/http/posts/tweets.types';
 
@@ -12,16 +14,22 @@ import { SmallThumbnail } from './atoms/SmallThumbnail/SmallThumbnail';
 import TwitterAvatar from 'pages/About/resources/1.jpg';
 
 import './BlogPage.scss';
+import { Button } from 'ui/atoms/Button/Button';
 
 export const BlogPage = (): React.ReactElement => {
   const [posts, setPosts] = useState<Posts[]>();
   const [tweets, setTweets] = useState<{ data: Tweet[] }>();
   const [isLoading, setIsLoading] = useState(true);
   const [isLoadingTweets, setIsLoadingTweets] = useState(true);
+  const { isUserLogged } = useContext(UserContext);
   const [errors, setErrors] = useState({
     statusCode: 0,
     message: '',
   });
+
+  const goToAddPage = (): void => {
+    history.push('blog/add');
+  };
 
   useEffect(() => {
     const getData = async () => {
@@ -64,6 +72,11 @@ export const BlogPage = (): React.ReactElement => {
             ) : (
               <>
                 <div className="blog__posts">
+                  {isUserLogged && (
+                    <div className="blog__posts__add-btn">
+                      <Button text="Add Post" onClick={goToAddPage} />
+                    </div>
+                  )}
                   {posts && posts.length !== 0 ? (
                     <>
                       <BigThumbnail data={posts[0]} />
