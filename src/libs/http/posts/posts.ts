@@ -10,4 +10,6 @@ export const posts = {
     axios.get(`/posts/tweets/${id}`),
 
   addPost: (data = {}): Promise<{ data: Posts }> => axios.post('/posts', data),
+  editPost: (data = {}): Promise<{ data: Posts }> =>
+    axios.patch('/posts', data),
 };

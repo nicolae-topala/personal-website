@@ -1,11 +1,13 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import env from '@beam-australia/react-env';
 import { useLocation, useParams } from 'react-router-dom';
 import { TwitterShareButton, FacebookShareButton } from 'react-share';
 
+import { history } from 'libs/history';
 import { Posts } from 'libs/http/posts/posts.types';
 import { posts as postsHttp } from 'libs/http/posts/posts';
 
+import { UserContext } from 'contexts/UserContext';
 import { Layout } from 'ui/organisms/Layout/Layout';
 import { Loader } from 'ui/atoms/Loader/Loader';
 import { PostAction } from './atoms/PostAction/PostAction';
@@ -15,9 +17,9 @@ import './BlogPostPage.scss';
 export const BlogPostPage: React.FC = (): React.ReactElement => {
   const [post, setPost] = useState<Posts>();
   const [isLoading, setIsLoading] = useState(true);
-
   const location = useLocation();
   const { id } = useParams<{ id: string }>();
+  const { isUserLogged } = useContext(UserContext);
 
   useEffect(() => {
     const getPost = async () => {
@@ -49,6 +51,10 @@ export const BlogPostPage: React.FC = (): React.ReactElement => {
     return '';
   };
 
+  const goToEditPage = (id: number): void => {
+    history.push(`/blog/edit/${id}`);
+  };
+
   return (
     <Layout>
       <div className="blog-post">
@@ -69,6 +75,13 @@ export const BlogPostPage: React.FC = (): React.ReactElement => {
                   className="blog-post__post"
                   dangerouslySetInnerHTML={{ __html: post.text }}
                 />
+                {isUserLogged && (
+                  <div className="admin-actions">
+                    <button onClick={() => goToEditPage(post.id)}>
+                      Edit Post
+                    </button>
+                  </div>
+                )}
                 <div className="blog-post__post-actions">
                   <div className="blog-post__post-actions__socials">
                     <TwitterShareButton

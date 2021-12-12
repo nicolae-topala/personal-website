@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import RichTextEditor from 'react-rte';
+import { useParams } from 'react-router-dom';
+
 import { history } from 'libs/history';
 import { photos } from 'libs/http/photos/photos';
 import { posts } from 'libs/http/posts/posts';
@@ -19,6 +21,27 @@ export const AddBlogPostPage = (): React.ReactElement => {
   const [coverUrl, setCoverUrl] = useState('');
   const [isBookEssay, setIsBookEssay] = useState(false);
   const { isUserLogged } = useContext(UserContext);
+  const [isEditPage, setIsEditPage] = useState(false);
+
+  // editing existing post
+  const { id } = useParams<{ id: string }>();
+
+  // checking if this is e dit page or add new post page
+  useEffect(() => {
+    const getData = async () => {
+      if (id) {
+        const { data } = await posts.getPost(id);
+        setIsEditPage(true);
+        setEditorValue(RichTextEditor.createValueFromString(data.text, 'html'));
+        setTitle(data.title);
+        setCoverUrl(data.coverUrl);
+        setIsBookEssay(data.isBookEssay);
+      } else setIsEditPage(false);
+    };
+
+    getData();
+  }, []);
+  //
 
   const onChangeType = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setIsBookEssay(event.target.checked);
@@ -48,6 +71,20 @@ export const AddBlogPostPage = (): React.ReactElement => {
     history.push('/blog');
   };
 
+  const editPost = async (): Promise<void> => {
+    const text = editorValue.toString('html');
+    const post = {
+      id: parseInt(id),
+      coverUrl,
+      title,
+      text,
+      isBookEssay,
+    };
+
+    await posts.editPost({ data: post });
+    history.push('/blog');
+  };
+
   useEffect(() => {
     if (!isUserLogged) history.push('/login');
   }, [isUserLogged]);
@@ -55,7 +92,9 @@ export const AddBlogPostPage = (): React.ReactElement => {
   return (
     <Layout>
       <div className="add-post">
-        <p className="add-post__title">Create a post</p>
+        <p className="add-post__title">
+          {isEditPage ? 'Edit a post' : 'Create a post'}
+        </p>
         <div className="add-post__add-cover">
           <p className="photo">Add Cover</p>
           <input type="file" className="upload-btn" onChange={onAddCover} />
@@ -82,7 +121,10 @@ export const AddBlogPostPage = (): React.ReactElement => {
           <p>Is this a book essay ?</p>
         </div>
 
-        <Button text="Add Post" onClick={addPost} />
+        <Button
+          text={isEditPage ? 'Edit Post' : 'Add Post'}
+          onClick={isEditPage ? editPost : addPost}
+        />
       </div>
     </Layout>
   );

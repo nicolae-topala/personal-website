@@ -11,6 +11,7 @@ export const routes = {
     { path: '/blog', exact: true, component: BlogPage },
     { path: '/blog/add', exact: true, component: AddBlogPostPage },
     { path: '/blog/:id', exact: true, component: BlogPostPage },
+    { path: '/blog/edit/:id', exact: true, component: AddBlogPostPage },
     { path: '/contact', exact: true, component: ContactPage },
     { path: '/login', exact: true, component: LoginPage },
   ],
