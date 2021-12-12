@@ -38,6 +38,7 @@ export const BlogPage = (): React.ReactElement => {
 
         setIsLoading(false);
         setPosts(data);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         setErrors(error.response.data);
       }
