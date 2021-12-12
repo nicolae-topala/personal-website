@@ -5,8 +5,7 @@
 /.pnp
 .pnp.js
 
-# Add this as ignored in a real project
-# .env
+.env
 
 # testing
 /coverage
