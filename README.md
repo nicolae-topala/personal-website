@@ -9,6 +9,8 @@ yarn add axios @types/axios
 
 yarn add node-sass @beam-australia/react-env
 
+yarn add react-cookies @types/react-cookies react-router-dom @types/react-router-dom react-rte @types/react-rte react-share @typescript-eslint/parser @typescript-eslint/eslint-plugin
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
