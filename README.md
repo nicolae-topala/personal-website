@@ -1,3 +1,14 @@
+# Yarn depedencies
+yarn add typescript @types/react @types/react-dom -D
+
+yarn add eslint eslint-config-prettier eslint-config-react eslint-import-resolver-typescript eslint-plugin-import eslint-plugin-prettier eslint-plugin-react prettier -D
+
+yarn add husky lint-staged -D
+
+yarn add axios @types/axios
+
+yarn add node-sass @beam-australia/react-env
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
